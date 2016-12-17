@@ -46,9 +46,9 @@ var store = new StoreClass( 'settings', defaultSettings, undefined, storeReady_b
 
 function storeReady_background() {
 	startTimer();
-	
+
 	initializeBackgroundPage();
-	
+
 	//context_menu.js
 	SetupContextMenu();
 }
@@ -102,7 +102,7 @@ function updateBackground( data )
 		} else {
 			badgeColor.color = new Array(255, 0, 0, 100);
 		}
-		
+
 		chrome.browserAction.setBadgeBackgroundColor(badgeColor)
 	}
 }
@@ -110,18 +110,18 @@ function updateBackground( data )
 function updateSpeedLog( data )
 {
 	var speedlog = [];
-	
+
 	var speedlogData = getPref( 'speedlog' );
 	if( speedlogData )
 	{
 		speedlog = JSON.parse(getPref('speedlog'));
-		
+
 		// Only allow 10 values, if at our limit, remove the first value (oldest)
 		while( speedlog.length >= 10 ) {
 			speedlog.shift();
 		}
 	}
-	
+
 	speedlog.push( data ? parseFloat( data.queue.kbpersec ) : 0 );
 	setPref( 'speedlog', JSON.stringify( speedlog ) );
 }
@@ -134,7 +134,7 @@ function displayNotificationCallback( data )
 	if( !data || data.error ) {
 		return;
 	}
-	
+
 	data.history.slots.forEach(function(entry)
 	{
 		// console.log(entry);
@@ -143,7 +143,7 @@ function displayNotificationCallback( data )
         {
 			console.log("Possible History notification:");
 			console.log(entry.name);
-            
+
 			// Only notify when post-processing is complete
 			if (entry.action_line == '')
             {
@@ -177,7 +177,7 @@ function displayNotificationCallback( data )
                         function(notId) { console.log("notification for "+notId); }
 					);
 				}
-				
+
 				localStorage[key] = true;
 			}
 		}
@@ -213,14 +213,14 @@ function fetchInfoSuccess( data, quickUpdate, callback )
 {
 	if( !data || data.error ) {
 		setPref( 'error', data ? data.error : 'Success with no data?' );
-		
+
 		if( callback ) {
 			callback();
 		}
-		
+
 		return;
 	}
-	
+
 	// This will remove the error
 	// Will cause problems if the error pref is used elsewhere to report other errors
 	setPref('error', '');
@@ -233,7 +233,7 @@ function fetchInfoSuccess( data, quickUpdate, callback )
 		var speed = '-';
 	}
 	setPref('speed', speed);
-	
+
 	// Do not run this on a quickUpdate (unscheduled refresh)
 	if( !quickUpdate ) {
 		updateSpeedLog( data );
@@ -255,7 +255,7 @@ function fetchInfoSuccess( data, quickUpdate, callback )
 	if(data.queue.paused) {
 		setPref("pause_int", data.queue.pause_int);
 	}
-	
+
 	updateBadge( data );
 	updateBackground( data );
 
@@ -266,7 +266,7 @@ function fetchInfoSuccess( data, quickUpdate, callback )
 
 function fetchInfoError( XMLHttpRequest, textStatus, errorThrown, callback ) {
 	setPref('error', 'Could not connect to SABnzbd - Check it is running, the details in this plugin\'s settings are correct and that you are running at least SABnzbd version 0.5!');
-	
+
 	if( callback ) {
 		callback();
 	}
@@ -287,7 +287,7 @@ function fetchInfo( quickUpdate, callback, profileValues )
 		mode: 'queue',
 		limit: '5'
 	};
-	
+
 	sendSabRequest(
 		params,
 		function(data) { fetchInfoSuccess( data, quickUpdate, callback ) },
@@ -303,7 +303,7 @@ function displayNotifications()
 			mode: 'history',
 			limit: '10'
 		};
-		
+
 		sendSabRequest( params, displayNotificationCallback );
 	}
 }
@@ -315,7 +315,7 @@ function setMaxSpeed( speed, success_callback, error_callback )
 		name: 'speedlimit',
 		value: speed
 	};
-	
+
 	sendSabRequest( params, success_callback, error_callback );
 }
 
@@ -325,18 +325,18 @@ function getMaxSpeed( success_callback )
 		mode: 'config',
 		name: 'get_speedlimit'
 	};
-	
+
 	sendSabRequest( params, success_callback );
 }
 
 function sendSabRequest( params, success_callback, error_callback, profileValues )
 {
 	var profile = profileValues || activeProfile();
-	
+
 	var sabApiUrl = constructApiUrl( profile );
 	var data = constructApiPost( profile );
 	data.output = 'json';
-	
+
 	$.ajax({
 		type: "GET",
 		url: sabApiUrl,
@@ -364,9 +364,9 @@ function refresh( quick, callback )
 	if( !callback ) {
 		callback = updatePopup;
 	}
-	
+
 	fetchInfo( quick, callback );
-	
+
 	if( !quick ) {
 		displayNotifications();
 	}
@@ -379,7 +379,7 @@ function restartTimer()
 	if( gTimer ) {
 		clearInterval( gTimer );
 	}
-	
+
 	startTimer();
 }
 
@@ -404,7 +404,7 @@ function DoesSiteSupportCatHeader( nzburl )
 			break;
 		}
 	}
-	
+
 	console.log( 'site_supports_category_header = ' + supported );
 	return supported;
 }
@@ -422,12 +422,12 @@ function SetupCategoryHeader( request, data, nzburl )
 	console.log( 'config_use_category_header = ' + useCatHeader );
 
     var useUserCats = store.get('config_use_user_categories');
-	
+
 	if( !useCatHeader || !DoesSiteSupportCatHeader( nzburl ) ) {
         if (!useUserCats) {
             var hardcodedCategory = store.get( 'config_hard_coded_category' );
             var defaultCategory = store.get( 'config_default_category' );
-            
+
             if( hardcodedCategory ) {
                 data.cat = hardcodedCategory;
             } else if( request.category ) {
@@ -447,7 +447,7 @@ function addToSABnzbd( request, sendResponse ) {
 	var nzburl = request.nzburl;
 	var mode = request.mode;
 	var nzbname = request.nzbname;
-	
+
 	var sabApiUrl = constructApiUrl();
 	var data = constructApiPost();
 	data.mode = mode;
@@ -456,7 +456,11 @@ function addToSABnzbd( request, sendResponse ) {
 	if( nzbname ) {
 		data.nzbname = nzbname;
 	}
-	
+
+	// if (request.category) {
+	// 	data.category = data.cat = requrest.category;
+	// }
+
 	if (!store.get('config_ignore_categories'))
 		SetupCategoryHeader( request, data, nzburl );
 
@@ -471,7 +475,7 @@ function addToSABnzbd( request, sendResponse ) {
 		success: function() { sendResponse( {ret: 'success', data: data } ); },
 		error: function() { sendResponse( {ret: 'error' } ); }
 	});
-	
+
 	fetchInfo(true);
 }
 
@@ -504,7 +508,7 @@ function OnRequest( request, sender, sendResponse )
 	var response = {
 		response: request.action
 	}
-	
+
 	switch( request.action ) {
 	case 'initialize':
 		InitializeContentScript( request, response );
@@ -526,7 +530,7 @@ function OnRequest( request, sender, sendResponse )
 		sendSabRequest(params, sendResponse);
 		return true;
 	}
-	
+
 	sendResponse( response );
 }
 
@@ -570,12 +574,12 @@ function initializeProfile()
 		store.set( 'first_profile_initialized', true );
 		return;
 	}
-	
+
 	var profile = profiles.getActiveProfile();
 	if( !profile ) {
 		// For some reason the active profile does not exist
 		console.warn( 'Last saved active profile was not found in the list of existing profiles. A new active profile was chosen.' );
-		
+
 		profile = profiles.getFirstProfile();
 		if( profile ) {
 			profiles.setActiveProfile( profile.name );

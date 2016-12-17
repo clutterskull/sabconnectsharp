@@ -92,7 +92,7 @@ this.manifest = {
 			'type': 'button',
 			'text': 'Test Connection'
 		},
-		
+
 		// Providers Tab, NZB downloading section
 		{
 			'tab': 'Providers',
@@ -183,8 +183,8 @@ this.manifest = {
 			'name': 'provider_omgwtfnzbs',
 			'type': 'checkbox',
 			'sync': true,
-			'label': 'omgwtfnzbs.org'
-		},	
+			'label': 'omgwtfnzbs.me'
+		},
 		{
 			'tab': 'Providers',
 			'group': '1-Click NZB downloading',
@@ -192,7 +192,7 @@ this.manifest = {
 			'type': 'checkbox',
 			'sync': true,
 			'label': 'nzb-rss.com'
-		},					
+		},
 		{
 			'tab': 'Providers',
 			'group': '1-Click NZB downloading',
@@ -209,7 +209,7 @@ this.manifest = {
 			'sync': true,
 			'label': 'usenet4ever.info'
 		},
-		
+
 		// Providers Tab, display section
 		{
 			'tab': 'Providers',
@@ -235,7 +235,7 @@ this.manifest = {
 			'sync': true,
 			'label': 'yubse.com: Use display name instead of NZB filename.'
 		},
-		
+
 		// Configuration Tab, General section
 		{
 			'tab': 'Configuration',
@@ -330,7 +330,7 @@ this.manifest = {
 			'label': 'Click to reset all settings to default:',
 			'text': 'Reset'
 		},
-		
+
 		// Configuration Tab, Categories section
 		{
 			'tab': 'Configuration',
