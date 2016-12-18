@@ -1,13 +1,6 @@
 var store = new StoreClass('settings', undefined, undefined, storeReady_settings);
 
 function storeReady_settings() {
-	var profiles = store.get('profiles');
-	if (profiles['']) {
-		profiles['Unnamed'] = profiles[''];
-		delete profiles[''];
-		store.set('profiles', profiles);
-	}
-
 	new FancySettings.initWithManifest( InitializeSettings );
 }
 
@@ -25,44 +18,44 @@ var profileMissingErrorMsg =
 
 var ProfilePopup = new Class({
 	'profiles': {},
-
+	
 	'initialize': function ( settings )
 	{
 		this.settings = settings;
 	},
-
+	
 	'add': function ( name )
 	{
 		var opt = new Element('option', {
 			'id': name,
 			'text': name
 		});
-
+		
 		opt.inject(this.settings.manifest.profile_popup.element);
 		this.profiles[name] = opt;
 	},
-
+	
 	'remove': function ( name )
 	{
 		this.profiles[name].dispose();
 		delete this.profiles[name];
 	},
-
+	
 	'rename': function( currentName, newName )
 	{
 		var p = this.profiles[currentName];
 		p.set( 'id', newName );
 		p.set( 'text', newName );
-
+		
 		delete this.profiles[currentName];
 		this.profiles[newName] = p;
 	},
-
+	
 	'setSelection': function( name )
 	{
 		this.settings.manifest.profile_popup.element.value = name;
 	},
-
+	
 	'getSelection': function()
 	{
 		return this.settings.manifest.profile_popup.element.value;
@@ -84,7 +77,7 @@ function checkForErrors()
 			.set( 'html', 'Succeeded' )
 			;
 	}
-
+	
 	// Unsetting error here as otherwise would appear in popup - could confuse the user
 	// Could move this just so it is removed when connected successfully
 	setPref('error', '');
@@ -99,7 +92,7 @@ function OnTestConnectionClicked()
 
 	background().testConnection( getConnectionValues(), checkForErrors );
 }
-
+	
 function RefreshControlStates( settings )
 {
 	for( var name in settings.manifest ) {
@@ -126,7 +119,7 @@ function CreateTestConnectionStatusElement( settings )
 	var resultDiv = new Element( 'div', {
 		id: 'connection-status'
 	});
-
+	
 	resultDiv.inject( settings.manifest.test_connection.container, 'bottom' );
 }
 
@@ -158,7 +151,7 @@ function RegisterContentScriptNotifyHandlers( settings )
 function SetupConnectionProfiles( settings )
 {
 	popup = new ProfilePopup( settings );
-
+	
 	var profileNames = store.get( 'profiles' );
 	for( var p in profileNames ) {
 		popup.add( p );
@@ -190,11 +183,11 @@ function generateUniqueName( name )
 {
 	var newName = name;
 	var counter = 1;
-
+	
 	while( profiles.contains( newName ) ) {
 		newName = name + counter++;
 	}
-
+	
 	return newName;
 }
 
@@ -202,11 +195,11 @@ function OnCreateProfileClicked()
 {
 	try {
 		var name = generateUniqueName( 'New Profile' );
-
+		
 		setConnectionValues( name, '', '', '', '' );
 		profiles.add( name, getConnectionValues() );
 		profiles.setActiveProfile( name );
-
+		
 		popup.add( name );
 		popup.setSelection( name );
 	}
@@ -220,12 +213,12 @@ function OnDuplicateProfileClicked()
 	try {
 		var activeProfile = profiles.getActiveProfile();
 		var name = generateUniqueName( activeProfile.name );
-
+		
 		var values = activeProfile.values;
 		setConnectionValues( name, values.url, values.api_key, values.username, values.password );
 		profiles.add( name, activeProfile.values );
 		profiles.setActiveProfile( name );
-
+		
 		popup.add( name );
 		popup.setSelection( name );
 	}
@@ -239,7 +232,7 @@ function OnDeleteProfileClicked()
 	try {
 		var selectedProfile = popup.getSelection();
 		popup.remove( selectedProfile );
-
+		
 		var newActive = profiles.remove( selectedProfile );
 		if( newActive ) {
 			changeActiveProfile( newActive );
@@ -259,7 +252,7 @@ function changeActiveProfile( profileName )
 {
 	profiles.setActiveProfile( profileName );
 	popup.setSelection( profileName );
-
+	
 	var profile = profiles.getActiveProfile().values;
 	if( profile) {
 		setConnectionValues( profileName, profile.url, profile.api_key, profile.username, profile.password );
@@ -295,30 +288,30 @@ function AddProfileButtons( settings )
 	m.profile_create.bundle.inject( m.profile_popup.bundle );
 	m.profile_duplicate.bundle.inject( m.profile_popup.bundle );
 	m.profile_delete.bundle.inject( m.profile_popup.bundle );
-
+	
 	m.profile_popup.container.setStyle( 'display', 'inline-block' );
 	m.profile_popup.container.setStyle( 'margin-right', '10');
 	m.profile_popup.element.setStyle( 'width', '150');
 	m.profile_create.bundle.setStyle( 'display', 'inline-block');
 	m.profile_duplicate.bundle.setStyle( 'display', 'inline-block');
 	m.profile_delete.bundle.setStyle( 'display', 'inline-block');
-
+	
 	m.profile_create.addEvent( 'action', OnCreateProfileClicked );
 	m.profile_duplicate.addEvent( 'action', OnDuplicateProfileClicked );
 	m.profile_delete.addEvent( 'action', OnDeleteProfileClicked );
-
+	
 	m.sabnzbd_url.addEvent( 'action', function(v) { OnConnectionFieldEdited( 'url', v ) } );
 	m.sabnzbd_api_key.addEvent( 'action', function(v) { OnConnectionFieldEdited( 'api_key', v ) } );
 	m.sabnzbd_username.addEvent( 'action', function(v) { OnConnectionFieldEdited( 'username', v ) } );
 	m.sabnzbd_password.addEvent( 'action', function(v) { OnConnectionFieldEdited( 'password', v ) } );
-
+	
 	m.profile_name.element.addEvent( 'blur', OnProfileNameChanged );
 }
 
 function InitializeSettings( settings )
 {
 	this.settings = settings;
-
+	
 	settings.manifest.config_reset.addEvent( 'action', OnResetConfigClicked );
 	settings.manifest.test_connection.addEvent( 'action', OnTestConnectionClicked );
 	settings.manifest.config_refresh_rate.addEvent( 'action', OnRefreshRateChanged );
@@ -341,7 +334,7 @@ window.onbeforeunload = function() {
 			'text field to save the changes. You may also leave the ' +
 			'options page now to discard those changes.'
 			;
-
+			
 		return msg;
 	}
 };
