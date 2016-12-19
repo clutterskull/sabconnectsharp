@@ -16,7 +16,7 @@ function ContextClicked( info, tab )
 		mode: 'addurl',
 		nzburl: info.linkUrl
 	};
-	
+
 	addToSABnzbd( request, AddLinkResult );
 }
 
@@ -26,7 +26,7 @@ function CreateContextMenuResult()
 	if( error )
 	{
 		alert(
-			'The context menu for SabConnect++ failed to load.\n\nDetails:\t' + error
+			'The context menu for SabConnect# failed to load.\n\nDetails:\t' + error
 		);
 	}
 }
@@ -36,7 +36,7 @@ function CreateContextMenu()
 	var urlPatterns = [
 		'http://*/*'
 	]
-	
+
 	var properties = {
 		type: 'normal',
 		title: 'Send link to SABnzbd',
@@ -44,7 +44,7 @@ function CreateContextMenu()
 		onclick: ContextClicked,
 		targetUrlPatterns: urlPatterns
 	}
-	
+
 	chrome.contextMenus.create( properties, CreateContextMenuResult );
 	console.log( 'Context menu created' );
 }

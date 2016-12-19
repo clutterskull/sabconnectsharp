@@ -34,7 +34,7 @@
         var thishost = (window.location.hostname.match(/([^.]+)\.\w{2,3}(?:\.\w{2})?$/) || [])[0];
         $('body').prepend(
            $('<div>').addClass('notification autonabSticky hide').prepend(
-                $('<p>SABconnect++ says: Would you like to enable one-click "Send to SAB" buttons on this site? </p>').append(
+                $('<p>SABconnect# says: Would you like to enable one-click "Send to SAB" buttons on this site? </p>').append(
                     ' <a href="javascript:" id="autonabEnable">Enable</a> | <a href="javascript:" id="autonabIgnore">Ignore</a>'
                 ),
                 $('<a class="close" href="javascript:">×</a>')

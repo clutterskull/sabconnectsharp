@@ -1,4 +1,4 @@
-body { 
+body {
     overflow: hidden;
     margin: 0;
     padding: 4px;
@@ -14,7 +14,7 @@ body {
     white-space: nowrap;
 }
 
-.menu div:hover { 
+.menu div:hover {
     background-color: #316AC5;
     color: white;
     cursor: pointer;
@@ -28,13 +28,13 @@ hr {
     margin: 2px 0;
 }
 
-#sabInfo { 
+#sabInfo {
     color: black;
     font-size: 11px;
     padding: 10px;
 }
 
-#sabInfo .label { 
+#sabInfo .label {
     font-weight: bold;
     width:140px;
     display:inline-block;

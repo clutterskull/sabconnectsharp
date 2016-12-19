@@ -1,4 +1,4 @@
-<Project name="sabconnect++">
+<Project name="sabconnect#">
 <MagicFolder excludeFiles="*.pnproj;*.pnps;*.bak;*.tmp" excludeFolders="CVS;.svn;.hg;.git;project;images" filter="*.js;*.html;*.css;*.json;*.txt" name="sabconnect" path="..\"/>
 </MagicFolder>
 </Project>

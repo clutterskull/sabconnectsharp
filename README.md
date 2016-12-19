@@ -1,8 +1,8 @@
-SABconnect++ adds one-click 'Send to SABnzbd' buttons to many popular NZB index sites.
+SABconnect# adds one-click 'Send to SABnzbd' buttons to many popular NZB index sites.
 
 You also get a taskbar button that allows you to keep an eye on your SABnzbd: current downloads, pause (individual downloads, or pause all), or remove individual queued downloads.
 
-Install SABconnect++ at our [Chrome Web Store page](https://chrome.google.com/webstore/detail/okphadhbbjadcifjplhifajfacbkkbod).
+Install SABconnect# at our [Chrome Web Store page](https://chrome.google.com/webstore/detail/okphadhbbjadcifjplhifajfacbkkbod).
 
 Features:
 
@@ -27,4 +27,4 @@ Features:
   * Desktop notifications (Download Complete/Failed)
   * Storage sync for settings
 
-SABconnect++ is a fork of the now unmaintained Chrome extension [SABconnect](http://code.google.com/p/sabconnect/).
+SABconnect# is an improvement fork of the Chrome extension [SABconnect++](https://github.com/gboudreau/sabconnectplusplus).
