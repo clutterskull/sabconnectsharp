@@ -1,3 +1,12 @@
+Version 0.7.1
+-------------
+Fixed omgwtfnzbs integration (again)
+
+Version 0.7.0
+-------------
+Branched from SABConnect++
+Fixed omgwtfnzbs integration
+
 Version 0.6.20
 --------------
 (again) Fixed nzbclub integration (thanks Mathias Rohnstock)

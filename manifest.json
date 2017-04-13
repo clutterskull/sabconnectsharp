@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "SABConnect#",
-	"version": "0.7.0",
+	"version": "0.7.1",
 	"description": "SABnzbd extension for Google Chrome.",
 	"minimum_chrome_version": "23.0",
 	"background": {
